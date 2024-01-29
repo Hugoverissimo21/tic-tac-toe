@@ -1,5 +1,6 @@
 ---
 title: "Tic-Tac-Toe"
+author: "Hugo Veríssimo"
 output: pdf_document
 date: \today
 ---
@@ -10,28 +11,36 @@ tic tac toe - estatistica de true games
 
 tic tac toe - variation and symetry and stuff using pandas
 
-dar nomes aos chuncks
 
-........
-........
-........
+........ ........ ........
 
-```{python}
+# Introduction
+
+
+\begin{tabular}{c|c|c}
+  1 & 2 & 3 \\      \hline
+  4 & 5 & 6 \\      \hline
+  7 & 8 & 9
+\end{tabular}
+
+```{python imports}
 import numpy as np
 import pandas as pd
 ```
 
+\pagebreak
 
+# How many games
 
 using NUMPY to get more efficient since all lists are only int numbers
 
-```{python}
+```{python ALL_tic_tac_toe}
 def ALL_tic_tac_toe():
     """
     generate all tic-tac-toe games but,
         doesn't care who starts (X or O)
         doesn't care if theres a win, just fills all the nine squares
-        impar numbers stand for the starter moves (X or O) and par numbers stand for the other player
+        impar numbers stand for the first player
         it's justs all the 9! games
     """
     move = 0
@@ -60,30 +69,24 @@ def ALL_tic_tac_toe():
     np.savetxt("attachment(1)_alltictactoe.csv", last_move, delimiter=",", fmt="%d")
 
     return "File saved.", len(last_move)
-```
-
-```{python}
+  
 ALL_tic_tac_toe()
 ```
 
+lets use pandas to preview da csv
 
-lets use pandas to preview da csv 
-
-```{python}
+```{python preview-ALL_tic_tac_toe}
 pd.read_csv("attachment(1)_alltictactoe.csv", header = None)
 ```
 
 we can see we have the 9! ....
 
-
-
-
 since we now have all the possible games lets see the ones according to the possible win using only NUMPY
 
-```{python}
+```{python TRUE_tic_tac_toe}
 def TRUE_tic_tac_toe():
     """
-    remove all the repated games which have wins and bla bla bla
+    remove the games from the set of 9! games where there are wins
     """
     def is_there_a_win(ttt):
         # convert 1D array into 2D array (3 by 3)
@@ -127,9 +130,7 @@ def TRUE_tic_tac_toe():
     np.savetxt("attachment(2)_truetictactoe.csv", unique_games, delimiter=",", fmt="%d")
 
     return "File saved.", len(unique_games)
-```
 
-```{python}
 TRUE_tic_tac_toe()
 ```
 
@@ -137,6 +138,6 @@ as we can see we got the possiblities down to ... (% decrease from original)
 
 lets see the csv using pandas
 
-```{python}
+```{python preview-TRUE_tic_tac_toe}
 pd.read_csv("attachment(2)_truetictactoe.csv", header = None)
 ```
