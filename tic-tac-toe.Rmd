@@ -5,14 +5,31 @@ output: pdf_document
 date: \today
 ---
 
+VER < ! -- aka comentarios
+
 # Introduction
 
+Tic-tac-toe is a paper-and-pencil game for two players who take turns marking the spaces in a three-by-three grid with X or O. The player who succeeds in placing three of their marks in a horizontal, vertical, or diagonal row is the winner.
 
+\begin{center}
 \begin{tabular}{c|c|c}
   1 & 2 & 3 \\      \hline
   4 & 5 & 6 \\      \hline
   7 & 8 & 9
 \end{tabular}
+\end{center}
+
+In this paper, I want to use my programming skills to dig into the game and learn more about it – things like figuring out how many possible games there are and looking at the stats behind it all.
+
+In pursuit of this exploration, I will harness the capabilities of Python, particularly relying on the Pandas and NumPy libraries. 
+
+<!-- AND OTHERS -->
+
+bla bla bla HERE
+
+meter jogo do galo exemplicado ali em cima
+
+
 
 ```{python imports}
 import numpy as np
