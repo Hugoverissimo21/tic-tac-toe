@@ -5,15 +5,6 @@ output: pdf_document
 date: \today
 ---
 
-COMMENT FUNCTIONS + INITIAL """ """ GET THEM BETTER AND SAY THERE WICH IMPORT WE USING
-
-tic tac toe - estatistica de true games
-
-tic tac toe - variation and symetry and stuff using pandas
-
-
-........ ........ ........
-
 # Introduction
 
 
