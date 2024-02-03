@@ -13,9 +13,9 @@ Tic-tac-toe is a paper-and-pencil game for two players who take turns marking th
 
 \begin{center}
 \begin{tabular}{c|c|c}
-  1 & 2 & 3 \\      \hline
-  4 & 5 & 6 \\      \hline
-  7 & 8 & 9
+  O & X & X \\      \hline
+  X & X & O \\      \hline
+  O & O & X
 \end{tabular}
 \end{center}
 
@@ -25,127 +25,274 @@ In pursuit of this exploration, I will harness the capabilities of Python, parti
 
 <!-- AND OTHERS -->
 
-bla bla bla HERE
-
-meter jogo do galo exemplicado ali em cima
-
-
-
 ```{python imports}
 import numpy as np
 import pandas as pd
 ```
 
+besides that I will be using some code that will not appear here but is in the respetcice file inside the repository on github (link)
+
+```{python import_mine}
+import games_generator as gg
+```
+
+
+
+$\ $
+
+NOTAS NOTAS NOTAS NOTAS NOTAS NOTAS
+
+\begin{center}
+\begin{tabular}{c|c|c}
+  0 & 1 & 2 \\      \hline
+  3 & 4 & 5 \\      \hline
+  6 & 7 & 8
+\end{tabular}
+\end{center}
+
+melhorar comentarios e """ em games_generator (?)
+
+9! and number into equation aka $dolar sign$
+
+
+
+
+
 \pagebreak
 
 # How many games
 
-using NUMPY to get more efficient since all lists are only int numbers
+the first approach will be just the 9! games, which means, player1 plays and then playr2 and so on until all 9 squares are fullfied.
+
+for this i will be using numpy since each game will be represented by a array with nine elements (repseenig each square) and each of this elemnt will be a int representing the move number that fills that square
 
 ```{python ALL_tic_tac_toe}
-def ALL_tic_tac_toe():
-    """
-    generate all tic-tac-toe games but,
-        doesn't care who starts (X or O)
-        doesn't care if theres a win, just fills all the nine squares
-        impar numbers stand for the first player
-        it's justs all the 9! games
-    """
-    move = 0
-    ith_move = np.array([[0,0,0 , 0,0,0 , 0,0,0], [0,0,0 , 0,0,0 , 0,0,0]])
-    
-    move = 1
-    while move < 9:
-        all_games = np.array([0,0,0 , 0,0,0 , 0,0,0])
-        list_all_games = [all_games]
-        for j in range(1, len(ith_move)):
-            for i in range(9):
-                if ith_move[j][i] != 0:
-                    pass
-                else:
-                    ith_move[j][i] = move
-                    list_all_games.append(ith_move[j].copy())
-                    ith_move[j][i] = 0
-        ith_move = np.vstack(list_all_games)
-        #print("Move " + str(move) + " - OK")
-        move += 1    
+# import games_generator as gg
 
-    move = 9
-    last_move = np.where(ith_move[1:] == 0, 9, ith_move[1:])
-    #print("Move " + str(move) + " - OK")
-
-    np.savetxt("attachment(1)_alltictactoe.csv", last_move, delimiter=",", fmt="%d")
-
-    return "File saved.", len(last_move)
-  
-ALL_tic_tac_toe()
+gg.ALL_tic_tac_toe("attachment(1)_alltictactoe.csv")
 ```
-
-lets use pandas to preview da csv
 
 ```{python preview-ALL_tic_tac_toe}
 pd.read_csv("attachment(1)_alltictactoe.csv", header = None)
 ```
 
-we can see we have the 9! ....
+as we can see, we have now the 9! games, lets check a random game for further understaging of the dataframe
 
-since we now have all the possible games lets see the ones according to the possible win using only NUMPY
-
-```{python TRUE_tic_tac_toe}
-def TRUE_tic_tac_toe():
-    """
-    remove the games from the set of 9! games where there are wins
-    """
-    def is_there_a_win(ttt):
-        # convert 1D array into 2D array (3 by 3)
-        TTT = ttt.reshape(3,3)
-
-        # lines to verify for wins (lines, columns, diagonals)
-        lines = np.vstack([TTT, np.transpose(TTT), np.diag(TTT), np.diag(np.fliplr(TTT))])
-        
-        # check sums to see if there is a winner
-        X_vs_O = np.where(lines % 2 == 1, 1, -1)
-        sums = np.sum(X_vs_O, axis=1)
-
-        # someone won
-        if 3 in np.abs(sums):
-            # find the winning move
-            last_move = np.max(lines, axis=1)
-            last_move[np.abs(sums) != 3] = 10
-            return True, min(last_move)
-
-        # draw game
-        else:
-            return False, 0
-        
-
-    with open("attachment(1)_alltictactoe.csv", "r") as csvfile:
-        rows = [line.strip().split(',') for line in csvfile]
-
-    new_games = []
-    for row in rows:
-        ttt = np.array(row).astype(float)
-        win = is_there_a_win(ttt)
-        if win[0]:
-            ttt[ttt > win[1]] = 0
-            new_games.append(ttt)
-        else:
-            new_games.append(ttt)
-
-    processed_games = np.vstack(new_games)
-    unique_games = np.unique(processed_games, axis=0)
-
-    np.savetxt("attachment(2)_truetictactoe.csv", unique_games, delimiter=",", fmt="%d")
-
-    return "File saved.", len(unique_games)
-
-TRUE_tic_tac_toe()
+```{python preview_one_of_the_ALL_TTT, echo = FALSE}
+x = pd.read_csv("attachment(1)_alltictactoe.csv", header = None)
+pd.DataFrame(x.loc[21125, :]).T
 ```
 
-as we can see we got the possiblities down to ... (% decrease from original)
+this game can be translated into this (assuming player1 is X)
 
-lets see the csv using pandas
+\begin{center}
+\begin{tabular}{c|c|c}
+  0 & 1 & 2 \\      \hline
+  3 & 4 & 5 \\      \hline
+  6 & 7 & 8
+\end{tabular}
+$\rightarrow$
+\begin{tabular}{c|c|c}
+  X & 1 & 2 \\      \hline
+  3 & 4 & O \\      \hline
+  6 & 7 & 8
+\end{tabular}
+$\rightarrow$
+\begin{tabular}{c|c|c}
+  X & 1 & X \\      \hline
+  3 & O & O \\      \hline
+  6 & 7 & 8
+\end{tabular}
+$\rightarrow$
+\begin{tabular}{c|c|c}
+  X & X & X \\      \hline
+  O & O & O \\      \hline
+  6 & 7 & 8
+\end{tabular}
+$\rightarrow$
+\begin{tabular}{c|c|c}
+  X & X & X \\      \hline
+  O & O & O \\      \hline
+  6 & O & X
+\end{tabular}
+$\rightarrow$
+\begin{tabular}{c|c|c}
+  X & X & X \\      \hline
+  O & O & O \\      \hline
+  X & O & X
+\end{tabular}
+\end{center}
+
+note that the two players succeed placing three of their marks in a horizontal row (row 1 and 2) so they both won the game? of course not, the first one completing the row won the game whhich would stop the game at that move making all the further moves irrelvant scenarios. This means there aren't 362880 (9!) games
+
+since we now have all the possible ways to fullfie the squares lets remove the moves that happen after one of the player wins
+
+```{python TRUE_tic_tac_toe}
+# import games_generator as gg
+
+gg.TRUE_tic_tac_toe("attachment(2)_truetictactoe.csv")
+```
 
 ```{python preview-TRUE_tic_tac_toe}
 pd.read_csv("attachment(2)_truetictactoe.csv", header = None)
 ```
+
+as we can see we got the possiblities down to 255168, a aproximatley 29.7% decrase from the 9! possiblities.
+
+# statistics HERE HERE HERE
+
+about the attachment(2) <- <- <- no pd.read_csv dar nome às colunas, col9 = WINNER
+
+quantos começam em cada sitio e % de vitoria se começar lá [.value_count() para ver qnts em cada quadrado ?]
+
+how many final games using only X and O
+
+use seaborn for graphs
+
+
+
+# symmetries
+
+
+
+
+using numpy check symmetries and all that
+
+```{python symmetries_from_nothing}
+# import numpy as np
+
+def SYMMETRIES_tic_tac_toe(n = 3, savefile = True):
+    """
+    simetrias bla bla
+    n = 3 -> 3 by 3 square
+    """
+
+    ############################################################################
+    def _symmetry_squares(n = n):
+        """ ex.: if there's vertical symmetry which squares are valid moves """
+        middle_line = n//2 + n%2
+
+        vertical = []
+        for row in range(n):
+            for col in range(middle_line):
+                vertical.append(row * n + col)
+
+        horizontal = []
+        for row in range(middle_line):
+            for col in range(n):
+                horizontal.append(row * n + col)
+        
+        diagonal = []
+        anti_diagonal = [] 
+        for row in range(n):
+            for col in range(n):
+                if row <= col:
+                    diagonal.append(row * n + col)
+                
+                if col <= (n-1) - row:
+                    anti_diagonal.append(row * n + col)
+
+        return vertical, horizontal, diagonal, anti_diagonal
+    ############################################################################
+
+
+    ############################################################################
+    symmetry_squares = _symmetry_squares(n)
+    
+    def _valid_moves(TTT, n = n, symmetry_squares = symmetry_squares):
+        middle_line = n//2 + n%2
+
+        # define all 4 axes of symmetry and verify them (True or False)
+        vertical = np.all([np.transpose(TTT)[i] == np.transpose(TTT)[-i-1] for i in range(middle_line)])
+        horizontal = np.all([TTT[i] == TTT[-i-1] for i in range(middle_line)])
+        diagonal = np.all(TTT == np.transpose(TTT))
+        anti_diagonal = np.all(np.fliplr(TTT) == np.transpose(np.fliplr(TTT)))
+        axes_of_symmetry = vertical, horizontal, diagonal, anti_diagonal
+
+        # which are the valid moves
+        all_possible_moves = set(range(n*n))
+        invalid_moves = []
+        for i in range(4):
+            if axes_of_symmetry[i]:
+                invalid_moves_i = all_possible_moves - set(symmetry_squares[i])
+                invalid_moves += invalid_moves_i
+        valid_moves = all_possible_moves - set(invalid_moves)
+
+        return list(valid_moves)
+    ############################################################################
+
+
+    ############################################################################
+    def _its_a_win(TTT, n = n):
+        lines = np.vstack([TTT, np.transpose(TTT), np.diag(TTT), np.diag(np.fliplr(TTT))])
+        # if 0 -> 0 ; if impar -> 1 ; if par -> -1   
+        X_vs_O = np.where(lines == 0, 0, np.where(lines % 2 == 1, 1, -1))
+        sums = np.sum(X_vs_O, axis=1)
+        return n in np.abs(sums)
+    ############################################################################
+    
+    TTT_moves = np.zeros(n**2)
+    TTT_symmetries = []
+
+    ongoing_games1 = [TTT_moves]
+    move = 1
+    while move < n**2:
+        ongoing_games2 = []
+        for game in ongoing_games1:
+            # verify possible moves
+            valid_moves = _valid_moves(game.reshape(n,n))
+            # play them
+            for valid_move in valid_moves:
+                if game[valid_move] != 0:
+                    pass
+                else:
+                    game[valid_move] = move
+                    # verify if its a winning move
+                    if _its_a_win(game.reshape(n,n)):
+                        TTT_symmetries.append(game.copy())
+                    else:
+                        ongoing_games2.append(game.copy())
+                        
+                    game[valid_move] = 0
+        # next move
+        move += 1
+        ongoing_games1 = ongoing_games2
+        
+    # last move
+    move = n**2
+    for game in ongoing_games1:
+        # was move (n**2 - 1) a winning move ?
+        if _its_a_win(game.reshape(n,n)):
+            TTT_symmetries.append(game.copy())
+        else:
+            TTT_symmetries.append(np.where(game == 0, n**2, game).copy())
+
+    if savefile:
+        np.savetxt("attachment(3)_symmetriestictactoe.csv", TTT_symmetries, delimiter=",", fmt="%d")
+        return "attachment(3) saved", len(TTT_symmetries)
+    else:
+        return TTT_symmetries, len(TTT_symmetries)
+
+
+SYMMETRIES_tic_tac_toe(n = 3)
+```
+
+```{python preview_symmetries_from_zero}
+pd.read_csv("attachment(3)_symmetriestictactoe.csv", header = None)
+```
+
+bla bla 31896
+
+```{python symmetries_for_square_nBYn-increaseN}
+# ver como cresce aquilo das simetrias com n += 1
+
+"""
+lista = []
+for i in range(1, 4):
+    lista.append(SYMMETRIES_tic_tac_toe(n = i, savefile=False)[1])
+    print(str(i) + " OK")
+    #print using {} la no meio a dizer tp n por n square ...
+lista
+"""
+```
+
