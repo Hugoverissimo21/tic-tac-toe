@@ -134,14 +134,16 @@ gg.TRUE_tic_tac_toe("attachment(2)_truetictactoe.csv")
 ```
 
 ```{python preview-TRUE_tic_tac_toe}
-pd.read_csv("attachment(2)_truetictactoe.csv", header = None)
+pd.read_csv("attachment(2)_truetictactoe.csv", names = (list(range(9))) + ["winner"])
 ```
 
 as we can see we got the possiblities down to 255168, a aproximatley 29.7% decrase from the 9! possiblities.
 
+note that i also added a new columns with a value to represent who won the game. the value in the "winner" columns can be 1 or 2 if player 1 or 2 won respectivley or 0 if the games ends up in draw.
+
 # statistics HERE HERE HERE
 
-about the attachment(2) <- <- <- no pd.read_csv dar nome às colunas, col9 = WINNER
+about the attachment(2)
 
 quantos começam em cada sitio e % de vitoria se começar lá [.value_count() para ver qnts em cada quadrado ?]
 
