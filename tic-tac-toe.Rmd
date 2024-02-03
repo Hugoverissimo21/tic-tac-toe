@@ -23,17 +23,20 @@ In this paper, I want to use my programming skills to dig into the game and lear
 
 In pursuit of this exploration, I will harness the capabilities of Python, particularly relying on the Pandas and NumPy libraries. 
 
-<!-- AND OTHERS -->
+<!-- AND OTHERS UPDATE -->
 
 ```{python imports}
 import numpy as np
 import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
 ```
 
 besides that I will be using some code that will not appear here but is in the respetcice file inside the repository on github (link)
 
 ```{python import_mine}
 import games_generator as gg
+import statistics_truegames as stg
 ```
 
 
@@ -151,7 +154,13 @@ true_games = pd.read_csv("attachment(2)_truetictactoe.csv",
 
 % of wins
 
-quantos começam em cada sitio e % de vitoria se começar lá [.value_count() para ver qnts em cada quadrado ?]
+quantos começam em cada sitio e % de vitoria se começar lá 
+ESCREVER TOTAL EM CIMA DE CADA BARRA ?
+```{python first_moves_statistics}
+# import statistics_truegames as stg
+
+stg.first_moves_statistics(15, 8)
+```
 
 how many final games using only X and O
 ```{python}
