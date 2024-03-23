@@ -1,8 +1,8 @@
-contabilizar jogos dos galos possiveis, tendo em conta q se inverter o jogo é uma modificacao do normal e se X ou O comecar tbm é igual - meter no github
 
-square de n lados ?
+- site no github
 
+- pq q aquilo do ver onde começa dá diferente as % de wins e isso
 
+- usar class tic tac toe ?
 
-
-ver definicoes github e criar site (?)
+- Winning Patterns Distribution: Create a bar chart or pie chart showing the distribution of different winning patterns. For example, you can show how often each row, column, and diagonal is used to win.
